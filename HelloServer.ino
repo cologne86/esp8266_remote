@@ -137,6 +137,19 @@ void handleLedOnOff()
   server.send(200, "text/plain", isOnString);
 }
 
+void handleLedState()
+{
+  bool isOn= !digitalRead(led);
+  String isOnString="";
+  if(!isOn)
+  {
+    isOnString="On";
+  }else{
+    isOnString = "Off";
+  }  
+  server.send(200, "text/plain", isOnString);
+}
+
 bool handleFileRead(String path){
   DBG_OUTPUT_PORT.println("handleFileRead: " + path);
   if(path.endsWith("/")) path += "index.htm";
@@ -215,6 +228,7 @@ void setupServer()
   //second callback handles file uploads at that location
   server.on("/edit", HTTP_POST, [](){ server.send(200, "text/plain", ""); }, handleFileUpload);
   server.on("/led_on_off", HTTP_GET, handleLedOnOff );
+  server.on("/led_state", HTTP_GET, handleLedState );
   //called when the url is not defined here
   //use it to load content from SPIFFS
   server.onNotFound([](){

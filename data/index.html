@@ -13,15 +13,19 @@
 </head>
 <body>
 <button onclick="getAnalyse()" type="button" class="btn btn-default">Basic</button>
-<button id="OnOffButton" onclick="setLedOnOff()" type="button" class="btn btn-default">Led On/Off</button>
+<button id="OnOffButton" onclick="setLedOnOff()" type="button" class="btn btn-default">On</button>
 <br>
 <img class="img-rounded" src="d1mini.jpg">
 <script>
-
+led(false);
 function getAnalyse() {
 	location.href = "/analyse.html";
 };
 function setLedOnOff(){
+	led(true);
+};
+function led(set)
+{
 	var xh = new XMLHttpRequest();
 	 xh.onreadystatechange = function(){
         if (xh.readyState == 4){
@@ -31,9 +35,16 @@ function setLedOnOff(){
           }
         }
       };
-	xh.open("GET", "/led_on_off", true);
+   url = "";
+   if(set)
+   {
+   	url="/led_on_off";
+   }
+   else {
+   	url="/led_state";
+   }
+	xh.open("GET", url , true);
    xh.send(null);
-  
 };
 </script>
 </body>

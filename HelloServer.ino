@@ -166,7 +166,6 @@ bool handleFileRead(String path){
   return false;
 }
 void handleNotFound(){
-  digitalWrite(led, 1);
   String message = "File Not Found\n\n";
   message += "URI: ";
   message += server.uri();
@@ -179,7 +178,6 @@ void handleNotFound(){
     message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
   }
   server.send(404, "text/plain", message);
-  digitalWrite(led, 0);
 }
 
 void setup(void){
@@ -193,6 +191,12 @@ void setup(void){
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
+  }
+  for(int i=0; i<10; i++) //visualize reboot
+  {
+    bool isOn= !digitalRead(led);
+    digitalWrite(led, isOn);
+    delay(200);
   }
   Serial.println("");
   Serial.print("Connected to ");

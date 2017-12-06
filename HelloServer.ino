@@ -192,7 +192,7 @@ void setup(void){
     delay(500);
     Serial.print(".");
   }
-  for(int i=0; i<10; i++) //visualize reboot
+  for(int i=0; i<20; i++) //visualize reboot
   {
     bool isOn= !digitalRead(led);
     digitalWrite(led, isOn);
